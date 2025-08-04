@@ -2,7 +2,7 @@ import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
 import { motion, usePresence } from "framer-motion";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
-import { HTMLAttributes, useEffect } from "react";
+import { HTMLAttributes, useEffect, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface ExperienceProps extends HTMLAttributes<HTMLDivElement> {
@@ -13,7 +13,6 @@ interface ExperienceProps extends HTMLAttributes<HTMLDivElement> {
     description: string;
     location: string;
     techStack: string[];
-    imagePositionY: number;
     image: string | StaticImport;
     className?: string;
     onAnimationComplete?: () => void;
@@ -29,7 +28,6 @@ const Experience = (props: ExperienceProps) => {
         description,
         location,
         techStack,
-        imagePositionY,
         image,
         className,
         onAnimationComplete,
@@ -46,45 +44,51 @@ const Experience = (props: ExperienceProps) => {
 
     const [isPresent, safeToRemove] = usePresence();
 
-    useEffect(() => {
+    const runAnimations = useCallback(async () => {
         if (isPresent) {
-            const runEntranceAnimations = async () => {
-                try {
-                    await companyIn();
-                    await roleIn();
-                    await dateIn();
-                    await locIn();
-                    await descIn();
-                    await techIn();
-                    onAnimationComplete?.();
-                } catch (error) {
-                    console.error('Animation error:', error);
-                    onAnimationComplete?.();
-                }
-            };
-
-            runEntranceAnimations();
+            try {
+                await companyIn();
+                await roleIn();
+                await dateIn();
+                await locIn();
+                await descIn();
+                await techIn();
+                onAnimationComplete?.();
+            } catch (error) {
+                console.error('Animation error:', error);
+                onAnimationComplete?.();
+            }
         } else {
-            const runExitAnimations = async () => {
-                try {
-                    await Promise.all([
-                        techOut(),
-                        descOut(),
-                        locOut(),
-                        dateOut(),
-                        roleOut(),
-                        companyOut(),
-                    ]);
-                } catch (error) {
-                    console.error('Exit animation error:', error);
-                } finally {
-                    safeToRemove();
-                }
-            };
-
-            runExitAnimations();
+            try {
+                await Promise.all([
+                    techOut(),
+                    descOut(),
+                    locOut(),
+                    dateOut(),
+                    roleOut(),
+                    companyOut(),
+                ]);
+            } catch (error) {
+                console.error('Exit animation error:', error);
+            } finally {
+                safeToRemove();
+            }
         }
-    }, [isPresent]);
+    }, [
+        isPresent,
+        companyIn, companyOut,
+        roleIn, roleOut,
+        dateIn, dateOut,
+        locIn, locOut,
+        descIn, descOut,
+        techIn, techOut,
+        onAnimationComplete,
+        safeToRemove
+    ]);
+
+    useEffect(() => {
+        runAnimations();
+    }, [runAnimations]);
 
     const variants = {
         enter: (direction: number) => ({

@@ -1,5 +1,4 @@
 import { stagger, useAnimate } from "motion/react";
-import { transform } from "next/dist/build/swc";
 import { useEffect } from "react";
 import SplitType from "split-type";
 

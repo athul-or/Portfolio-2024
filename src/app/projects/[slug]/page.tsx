@@ -15,8 +15,6 @@ interface ProjectPageProps {
 export default function ProjectPage({ params }: ProjectPageProps) {
     const project = projects.find((p) => p.slug === params.slug);
 
-    if (!project) return notFound();
-
     const { scope: titleScope, entranceAnimation: titleEntranceAnimation } = useTextRevealAnimation();
     const { scope: descScope, entranceAnimation: descEntranceAnimation } = useTextRevealAnimation();
 
@@ -24,6 +22,11 @@ export default function ProjectPage({ params }: ProjectPageProps) {
         titleEntranceAnimation();
         descEntranceAnimation();
     }, [titleEntranceAnimation, descEntranceAnimation]);
+
+    if (!project) {
+        notFound();
+        return null;
+    }
 
     return (
         <section className="relative min-h-screen flex items-center justify-center px-6 py-16">
@@ -111,7 +114,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 4.1, duration: 0.7 }}
                             className="flex flex-wrap justify-center lg:justify-start gap-2">
-                            {project.techStack.map((tech, index) => (
+                            {project.techStack.map((tech) => (
                                 <span
                                     key={tech}
                                     className="px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20
@@ -137,7 +140,7 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                                    text-white font-semibold rounded-xl shadow-md
                                    hover:scale-105 hover:shadow-lg transition-transform duration-300"
                         >
-                            Visit Site 
+                            Visit Site
                         </a>
                     </motion.div>
                 </div>

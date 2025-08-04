@@ -88,7 +88,6 @@ const Experiences: FC = () => {
               location={experienceData[experienceIndex].location}
               techStack={experienceData[experienceIndex].techStack}
               image={experienceData[experienceIndex].logo}
-              imagePositionY={0}
               onAnimationComplete={() => setIsAnimating(false)}
               custom={direction}
             />

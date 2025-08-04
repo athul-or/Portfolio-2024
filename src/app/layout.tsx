@@ -13,8 +13,12 @@ const archivo = Archivo({
 
 export const metadata: Metadata = {
   title: "Athul OR",
-  description: "Created with Frontend Tribe",
+  icons: {
+    icon: "/AOR.ico",
+    shortcut: "/AOR.ico",
+  },
 };
+
 
 export default function RootLayout({
   children,
