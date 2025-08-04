@@ -48,14 +48,18 @@ const Experiences: FC = () => {
     if (isAnimating) return;
     setIsAnimating(true);
     setDirection(-1);
-    setExperienceIndex(curr => curr === 0 ? experienceData.length - 1 : curr - 1);
+    setExperienceIndex(prev =>
+      prev === 0 ? experienceData.length - 1 : prev - 1
+    );
   };
 
   const handleClickNext = () => {
     if (isAnimating) return;
     setIsAnimating(true);
     setDirection(1);
-    setExperienceIndex(curr => curr === experienceData.length - 1 ? 0 : curr + 1);
+    setExperienceIndex(prev =>
+      prev === experienceData.length - 1 ? 0 : prev + 1
+    );
   };
 
   return (

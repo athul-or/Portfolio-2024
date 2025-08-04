@@ -1,11 +1,11 @@
 import useTextRevealAnimation from "@/hooks/useTextRevealAnimation";
-import { motion, usePresence } from "framer-motion";
+import { motion, usePresence, HTMLMotionProps } from "framer-motion";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
-import { HTMLAttributes, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { twMerge } from "tailwind-merge";
 
-interface ExperienceProps extends HTMLAttributes<HTMLDivElement> {
+interface ExperienceProps extends HTMLMotionProps<"div"> {
     company: string;
     role: string;
     startDate: string;
@@ -122,7 +122,7 @@ const Experience = (props: ExperienceProps) => {
             animate="center"
             exit="exit"
             key={company + role}
-            {...(rest as any)}
+            {...rest} // ✅ rest now correctly typed as HTMLMotionProps<"div">
         >
             <div className="aspect-square md:aspect-[3/4] md:col-span-2 relative overflow-hidden">
                 <Image
