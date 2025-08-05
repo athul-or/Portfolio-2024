@@ -45,7 +45,7 @@ const Footer: FC = () => {
         <div className="section">
           <div className="flex items-center gap-3">
             <div className="size-3 bg-green-400 rounded-full animate-pulse"></div>
-            <span className="uppercase">One spot available for next month</span>
+            <span className="uppercase">HAVE A PROJECT IN MIND?</span>
           </div>
 
           <div className="grid md:grid-cols-3 md:items-center">

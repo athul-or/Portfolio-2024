@@ -13,8 +13,8 @@ const navItems = [
     href: "#projects",
   },
   {
-    label: "Testimonials",
-    href: "#testimonials",
+    label: "Experience",
+    href: "#experience",
   },
   {
     label: "FAQs",
@@ -23,7 +23,7 @@ const navItems = [
   {
     label: "Contact",
     href: "#contact",
-  },
+  }
 ];
 
 const Header: FC = () => {

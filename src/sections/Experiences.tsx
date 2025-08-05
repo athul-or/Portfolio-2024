@@ -45,22 +45,22 @@ const Experiences: FC = () => {
   const [direction, setDirection] = useState<number>(1);
 
   const handleClickPrev = () => {
-    if (isAnimating) return;
+    if (isAnimating || experienceIndex === 0) return;
     setIsAnimating(true);
     setDirection(-1);
-    setExperienceIndex(prev =>
-      prev === 0 ? experienceData.length - 1 : prev - 1
-    );
+    setExperienceIndex(prev => prev - 1);
   };
 
   const handleClickNext = () => {
-    if (isAnimating) return;
+    if (isAnimating || experienceIndex === experienceData.length - 1) return;
     setIsAnimating(true);
     setDirection(1);
-    setExperienceIndex(prev =>
-      prev === experienceData.length - 1 ? 0 : prev + 1
-    );
+    setExperienceIndex(prev => prev + 1);
   };
+
+  // Check if buttons should be shown
+  const showPrevButton = experienceIndex > 0;
+  const showNextButton = experienceIndex < experienceData.length - 1;
 
   return (
     <section className="section" id="experience">
@@ -104,25 +104,29 @@ const Experiences: FC = () => {
           animate={{ opacity: isAnimating ? 0.5 : 1 }}
           transition={{ duration: 0.3 }}
         >
-          <button
-            onClick={handleClickPrev}
-            disabled={isAnimating}
-            className="border border-stone-500 size-11 inline-flex items-center justify-center rounded-full hover:bg-red-orange-500 hover:text-white hover:border-red-orange-500 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
-            </svg>
-          </button>
+          {showPrevButton && (
+            <button
+              onClick={handleClickPrev}
+              disabled={isAnimating}
+              className="border border-stone-500 size-11 inline-flex items-center justify-center rounded-full hover:bg-red-orange-500 hover:text-white hover:border-red-orange-500 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+              </svg>
+            </button>
+          )}
 
-          <button
-            onClick={handleClickNext}
-            disabled={isAnimating}
-            className="border border-stone-500 size-11 inline-flex items-center justify-center rounded-full hover:bg-red-orange-500 hover:text-white hover:border-red-orange-500 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
-          </button>
+          {showNextButton && (
+            <button
+              onClick={handleClickNext}
+              disabled={isAnimating}
+              className="border border-stone-500 size-11 inline-flex items-center justify-center rounded-full hover:bg-red-orange-500 hover:text-white hover:border-red-orange-500 transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+              </svg>
+            </button>
+          )}
         </motion.div>
       </div>
     </section>
